@@ -1,11 +1,13 @@
 import React from 'react';
 
 const AddToCart = ({ cartItem, removeCartItem }) => {
+  
+  
   return (
     <div className='addtocart'>
       <h2>CART <button>Close</button></h2>
       <div className='cart_grid'>
-        {Array.isArray(cartItem) && cartItem.map((prod) => (
+        {cartItem.map((prod) => (
           <div className='cart_card' key={prod.prod_id}>
             <img src={prod.prod_img} alt={prod.prod_name} />
             <span>

@@ -1,33 +1,40 @@
-import { useState } from 'react'
+import { useState, useContext, createContext } from 'react'
 import Container from './components/Container'
 import './App.css'
 import AddToCart from './components/AddToCart'
+import products from './components/products'
+
+export const UserContext = createContext();
 
 function App() {
 
+
   const [cartItems, setCartItems] = useState([])
 
-  function updateCart(newItem){
-    console.log(newItem)
+  function updateCart(productId) {
 
-    setCartItems((current)=>(
-      [...current, newItem]
-    ))
+    setCartItems( current => [...current, products.find((prod) => prod.prod_id === productId) ] )
+    console.log(cartItems)
   }
 
-  function removeCart(productId){
 
-    setCartItems((current)=>{
-      const updatedCart = current.filter(item => item.prod_id !== productId);
-      setCartItems(updatedCart);
-    }
-    )
+  function removeCart(productId) {
+
+    setCartItems( current => current.filter(item => item.prod_id !== productId) )
+    console.log(cartItems)
+    console.log(productId)
+
+
   }
 
   return (
     <>
-      <Container newCart={(e)=>updateCart(e)}/>
+      <UserContext.Provider value={updateCart} >
+       <Container />
+      </UserContext.Provider>
+
       <AddToCart cartItem={cartItems} removeCartItem={removeCart}/>
+      
     </>
   )
 }
